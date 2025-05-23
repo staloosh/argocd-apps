@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: microservices-appset
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - name: frontend
+        namespace: frontend
+        path: services/frontend
+        replicas: "3"
+      - name: backend
+        namespace: backend
+        path: services/backend
+        replicas: "2"
+      - name: database
+        namespace: database
+        path: services/database
+        replicas: "1"
+  template:
+    metadata:
+      name: '{{name}}-service'
+      labels:
+        app-type: microservice
+        service: '{{name}}'
+    spec:
+      project: demo-project
+      source:
+        repoURL: https://github.com/dysloodj/microservices-repo
+        targetRevision: main
+        path: '{{path}}'
+        helm:
+          parameters:
+          - name: replicaCount
+            value: '{{replicas}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+
