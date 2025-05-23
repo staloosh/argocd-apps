@@ -28,7 +28,7 @@ spec:
     spec:
       project: demo-project
       source:
-        repoURL: https://github.com/dysloodj/microservices-repo
+        repoURL: https://github.com/staloosh/microservices-repo
         targetRevision: main
         path: '{{path}}'
         helm:
