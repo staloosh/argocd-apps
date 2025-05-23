@@ -2,21 +2,21 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: microservices-appset
-  namespace: argocd
+  namespace: cardano
 spec:
   generators:
   - list:
       elements:
       - name: frontend
-        namespace: frontend
+        namespace: cardano
         path: services/frontend
         replicas: "3"
       - name: backend
-        namespace: backend
+        namespace: cardano
         path: services/backend
         replicas: "2"
       - name: database
-        namespace: database
+        namespace: cardano
         path: services/database
         replicas: "1"
   template:
