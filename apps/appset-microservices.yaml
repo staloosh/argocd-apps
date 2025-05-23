@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: microservices-appset
-  namespace: argocd
+  namespace: cardano
 spec:
   generators:
   - list:
